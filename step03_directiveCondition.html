@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+    <h2>v-if, v-else-if, v-else</h2>
+    1. 조건에 부합되지 않으면 렌더링 하지 않음 <br>
+    2. test 조건식이 마이너스는 불허 <br>
+
+    <div id="money">
+        돈 <input type="text" v-model="amount">
+        <!--? 마이너스가 아니라면 lion.png 보이게 개발
+        -라면 apeach.png 가 보이게 수정-->
+
+        <img v-if="amount >= 0" src="images/lion.png">
+        <img v-else-if="amount < 0" src="images/apeach.png">
+    </div>
+
+    <script>
+        new Vue({
+            el : "#money",
+            data : {
+                amount : 0
+            }
+        });
+    </script>
+    <br><hr><br>
+
+    <h2>[2]</h2>
+    1. html tag를 화면에 css로 존재하나 보였다, 안 보였다 눈속임 display:none = 안보임,
+        diplay:block = 보임
+</body>
+</html>

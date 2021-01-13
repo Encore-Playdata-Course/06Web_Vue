@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h2>Vue 맛보기</h2>
+    1. view <br>
+    2. mode <br>
+    3. viewmode <br>
+
+    <br><hr><br>
+
+    <!-- view -->
+    <div id ="app">
+        <li>{{one}}</li>
+
+        <!--v-? : directive-->
+        <li v-html="one"></li>
+        <li v-text="one"></li>
+        <li v-once>{{one}}</li>
+
+        <br><hr><br>
+        <li>
+            <input type="text" v-bind:value="one">
+        </li>
+        <li>
+            <!-- 양방향 바인딩 기능의 directive -->
+            <input type="text" v-model="one">
+        </li>
+        <li>
+            <!-- lazy : 수식어 적용 시 input tag의 text인 경우 포커스가 이동 시를 이벤트 발생 시점으로 간주-->
+            <input type="text" v-model.lazy="one">
+        </li>
+        
+    </div>
+    <br><hr><br>
+
+    <!--? 접속시에 Vue instance가 보유한 model 데이터 속 이름과 두번째 취미값 출력-->
+    <div id="app2">
+        <form>
+            <label for="fname">이름</label><br>
+            <input type="text" id="fname" name="fname" v-model="name.myname"><br>
+
+            <label for="lname">두번째 취미</label><br>
+            <input type="text" id="lname" name="lname" v-model="hobbys.one">
+          </form>
+    </div>
+
+    <script>
+        //model
+        let hobbys = {"one" : "축구", "two" : "공부하기"}
+        let name = {"myname" : "김민건"}
+        let model = {
+            hobbys : {"one" : "축구", "two" : "공부하기"},
+            name : {"myname" : "김민건"}
+        };
+        //viewmodel = vue 객체(instance)
+        let vm = new Vue({
+            el : '#app',
+            // data : hobbys
+            // data : {"one" : "축구", "two" : "공부하기"}
+        });
+
+        let vm2 = new Vue({
+            el : '#app2',
+            //step01 - 전역 변수를 model로 사용
+            // data : {hobbys, name}
+
+            //step02 - model을 직접 data 속성에 적용
+            // data : {
+            //     hobbys : {"one" : "축구", "two" : "공부하기"},
+            //     name : {"myname" : "김민건"}
+            // }
+
+            //step03 - 외부 변수로 선언된 model을 data 속성에 적용
+            data : model
+        });
+    </script>
+</body>
+</html>
+
+
+<!--
+    html 상에서 사용 가능한 tag
+    1. html tag
+    2. vue tag
+
+    jsp 상에서 사용 가능한 tag
+    1. html tag
+    2. vue tag
+    3. jsp scripting tag : <%? %>
+    4. jsp action tag : <jsp:forward>
+    5. EL : ${} - server에서 실행되는 java 데이터 출력 tag
+    6. JSTL : <c: >
+-->
