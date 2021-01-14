@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Vue 객체(instance)구성 시 computed라는 속성과 함께 함수(기능)를 등록할 경우 속성처럼 사용 가능</h3>
+    <br><hr><br>
+    <div id="app">
+        <!-- 하나의 input tag에 여백(space 한번)을 기준으로 "이름 나이" 형식으로 입력하면 이름은 name,
+        나이는 age에 바인딩
+        로직처리 : 입력된 하나의 문자열을 VM에서 가공해서 name/age에 binding
+    
+        info - 다수의 함수로 구성된 js 객체
+                이러한 객체가 computed 속성에 등록(구현)되어 있을 경우 set/get 필요로 함
+                호출은 브라우저가 vue객체 생성하면서 get 자동 호출
+                set은 model의 데이터 변경 시 자동 호출
+                템플릿 표현식에는 이 함수들을 보유한 속성명만 선언
+                -->
+        <input type="text" v-model="info"><br>
+        이름 : {{name}}, 나이 : {{age}} <br>
+        <!-- sum은 VM객체의 model의 property 처럼 호출하나 computed 속성에 개발된 sum() 함수
+            methods 속성과의 가장 큰 차이점 : 메소드는 () 필수, computed 속성내에 구현된 함수는 이름으로만
+            마치 속성 호출하듯 호출
+        
+            가령 연산 로직이 필요한 경우에 사용하기도 함-->
+        합 {{sum}}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el : "#app",
+            data : {
+                name : "김소연",
+                age : 20
+            },
+            computed : {
+                info : {
+                    set : function(v){ //info가 binding되어 있는 값 수정 시 자동 호출
+                        v = v.split(" ")
+                        console.log(v);
+                        this.name = v[0];
+                        this.age = v[1];
+                    },
+                    get : function(){
+                        // alert("get"); - 브라우저 실행 시 자동 호출
+                        return this.name + " " + this.age;
+                    },
+                    // my : function(){
+                    //     alert("my");
+                    // }
+                },
+                sum : function(){
+                    return 2+3;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

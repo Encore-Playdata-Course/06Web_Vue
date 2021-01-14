@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>v-if, v-show review</h3>
+
+    미완성 부분 완성하기 <br>
+
+    <ol>
+        <li>lion 선택시 lion 이미지 보이기</li>
+        <li>apeach 선택시 apeach 이미지 보이기</li>
+        <li>이미지 없음 선택시 '선택한 캐릭터가 없습니다.' 출력</li>
+    </ol>
+
+    <br>
+
+    <div id="kakao">
+
+        * 카카오 캐릭터를 선택하기 <br>
+
+        <input type="radio" id="emoticon" value="lion" v-model="emoticon">lion
+        <input type="radio" id="emoticon" value="apeach" v-model="emoticon">apeach
+        <input type="radio" id="emoticon" value="" v-model="emoticon">이미지 없음
+
+        <br><hr><br>
+        <label>선택한 이모티콘 : {{emoticon}}</label>
+
+        <br><hr><br>
+
+        <dl>
+            <dt>1. v-if, v-else-if, v-else directive로 처리</dt><br>
+
+            <dd>
+                v-if로 이미지 보기 <br>
+                <!-- ? -->
+                <img v-if="emoticon==='lion'" src="images/lion.png" alt="라이온" width="200px">
+                <img v-else-if="emoticon==='apeach'" src="images/apeach.png" alt="" width="200px">
+                <label v-else>선택한 캐릭터가 없습니다.</label>
+            </dd>
+
+            <br><br>
+
+            <dt>2. v-show directive로 처리</dt><br>
+            <dd>
+                v-show로 이미지 보기<br>
+                <!-- ? -->
+                <img v-show="emoticon==='lion'" src="images/lion.png" alt="라이온" width="200px">
+                <img v-show="emoticon==='apeach'" src="images/apeach.png" alt="" width="200px">
+                <label v-show="emoticon===''">선택한 캐릭터가 없습니다.</label>
+            </dd>
+        </dl>
+
+    </div>
+
+    <script>
+        // ?
+        let app = new Vue({
+            el :"#kakao",
+            data : { emoticon : ""}
+           
+        });
+    </script>
+</body>
+
+</html>

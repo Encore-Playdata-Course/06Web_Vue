@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+</head>
+<body>
+    <h3>v-bind directive review</h3>
+
+    1. 프로그램명 입력 및 배우 선택시에 정보 보기 화면에 출력하기 <br>
+    2. body element 내의 미완성 부분 완성하기 <br>
+
+    <br><hr><br>
+
+    <div id="program">
+        <label>1. 프로그램명 : </label>
+
+        <!-- ? -->
+        <input type="text" v-model="program"><br>
+
+
+        <label>2. 출연 배우를 선택하세요</label> <br>
+        <!-- ? -->
+        <input type="checkbox" value="유재석" v-model="actor">유재석 <br>
+        <input type="checkbox" value="신동엽" v-model="actor">신동엽 <br>
+        <input type="checkbox" value="강호동" v-model="actor">강호동 <br>
+    </div>
+    
+    <br><hr><br>
+
+    <!-- ? 템플릿 표현식 or 털수염 표현식 : 데이터를 화면 출력 -->
+    <div id="programInfoView">
+        3. 정보 보기 <br>
+        <ol>
+            <li>프로그램명 : {{program}}</li>
+            <li>출연진 : {{actor}}</li>
+        </ol>
+    </div>
+    
+    
+    <script>
+        let model = {
+            program : "",
+            actor : []
+        }
+
+        let program = new Vue({
+            el : "#program",
+            data : model
+        });
+
+        let programInfoView = new Vue({
+            el : "#programInfoView",
+            data : model
+        });
+
+    </script>
+
+</body>
+</html>

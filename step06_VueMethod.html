@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h3>Vue Instance에 사용자 정의 메소드 개발 및 활용</h3>
+   1. 메소드 구현 -> 호출
+   
+   <br><hr><br>
+    <div id="app1">
+        이름 : {{name}} <br>
+        주소 : {{address}} <br>
+        취미1 : {{hobbyJSON.one}} <br>
+        함수로 이름 호출 : {{myInfo()}} <br>
+        함수로 이름 호출 : {{hobby("아아아")}} <br>
+    </div>
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <script>
+       let hobbyJSON = {"one" : "공부하기", "two" : "Threejs"}
+       let vm1 = new Vue({
+           el:"#app1",
+           data : {
+               name : "백종원",
+               address : "서울",
+               hobbyJSON
+           },
+           methods : {
+               myInfo : function(){
+                   return "이름 : "+ this.name;
+               },
+               hobby : function(v){
+                   return "넌 희망이 뭐야? "+v;
+               }
+           }
+           
+        })
+        //Vue instance들이 보유한 model(data) 활용해보기
+        console.log(1+" "+vm1.name);
+        console.log(2+" "+vm1.$data.name);
+   </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>v-for directive</h2>
+
+    1. 반복해서 화면에 데이터를 렌더링 할 수 있는 directive <br>
+
+    <!-- view -->
+    <div id="app">
+        <dl>
+            <dt>1. java script 리터럴 객체의 데이터 값 반복해서 렌더링</dt>
+            <dd>
+                <!-- 반복문 자체 반환 데이터 순서 : 값 -> property명(변수명, 속성명, key명) -> [순번]-->
+                <li v-for="(value, key, index) in alias">
+                    {{index + 1}} 속성명 : {{key}}, 값 : {{value}}
+                </li>
+            </dd>
+
+            <hr>
+            <dt>2. 배열 데이터를 렌더링</dt>
+            <dd>
+                <!-- 배열인 경우 반복문 내부에서 반환되는 값은 값 -> 배열요소(값)의 index -->
+                <li v-for="(value, keyindex) in favorite">
+                    {{keyindex}}--{{value}}
+                </li>
+            </dd>
+
+            <hr>
+            <dt>3. 배열 데이터 + 조건식을 반영해서 렌더링</dt>
+            <dd>
+                <!-- 하나의 요소(element, tag)에는 다중 directive 적용 가능 -->
+                <li v-for="(value, keyindex) in coffees" v-if="value =='아메리카노'">
+                    선호하는 커피 = {{value}}
+                </li>
+            </dd>
+
+            <hr>
+            <dd>
+                <li v-for="(model, key) in emp">
+                    lastName : {{model.lastName}}, firstName : {{model.firstName}}
+                </li>
+            </dd>
+
+            <hr>
+            <dd>
+                <dt>4. template tag : 여러 element들을 묶어서 관리 및 표현 및 재사용시 권장,
+                    요소들 그룹핑시 주로 사용</dt>
+                <template v-for="(value, key) in favorite">
+                    <li>좋아하는 취미 : {{value}}</li>
+                    <!-- key가 짝수인 경우에만 수평선 적용하기-->
+                    <hr v-if="key%2==0">
+                </template>
+            </dd>
+        </dl>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        let model = {
+            favorite: ["공부", "영화보기", "빈둥거리기", "몽상하기"],
+            coffees: ["아메리카노", "라떼", "돌체라떼", "모카"],
+            alias: {
+                name: "유재석",
+                nickName: "예능인"
+            },
+            emp : [
+                { "firstName": "John", "lastName": "Doe" },
+                { "firstName": "Anna", "lastName": "Smith" },
+                { "firstName": "Peter", "lastName": "Jones" }
+            ]
+        };
+        
+        let vm = new Vue({
+            el : "#app",
+            data : model
+        });
+    </script>
+</body>
+</html>
