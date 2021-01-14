@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div id="app">
         이상형 : {{people | dream}} <br>
@@ -25,65 +27,66 @@
         let s = 0;
         let num = 0;
         let vm = new Vue({
-            el : "#app",
-            data : {
-                people : [
-  {
-    "name": "유진초이",
-    "age": 50,
-    "sex": "male",
-    "birthdate": 1871
-  },
-  {
-    "name": "고애신",
-    "age": 34,
-    "sex": "female",
-    "birthdate": 1887
-  },
-  {
-    "name": "구동매",
-    "age": 35,
-    "sex": "male",
-    "birthdate": 1886
-  },
-  {
-    "name": "김희성",
-    "age": 36,
-    "sex": "male",
-    "birthdate": 1875
-  },
-  {
-    "name": "쿠도히나",
-    "age": 41,
-    "sex": "female",
-    "birthdate": 1880
-  }
-]
+            el: "#app",
+            data: {
+                people: [
+                    {
+                        "name": "유진초이",
+                        "age": 50,
+                        "sex": "male",
+                        "birthdate": 1871
+                    },
+                    {
+                        "name": "고애신",
+                        "age": 34,
+                        "sex": "female",
+                        "birthdate": 1887
+                    },
+                    {
+                        "name": "구동매",
+                        "age": 35,
+                        "sex": "male",
+                        "birthdate": 1886
+                    },
+                    {
+                        "name": "김희성",
+                        "age": 36,
+                        "sex": "male",
+                        "birthdate": 1875
+                    },
+                    {
+                        "name": "쿠도히나",
+                        "age": 41,
+                        "sex": "female",
+                        "birthdate": 1880
+                    }
+                ]
             },
-            filters : {
-                dream : function(v){
-                    for(let i =0; i <5;i++)
-                    if(v[i].name == "유진초이")
-                    return v[i].name;
+            filters: {
+                dream: function (v) {
+                    for (let i = 0; i < 5; i++)
+                        if (v[i].name == "유진초이")
+                            return v[i].name;
                 },
-                sum : function(v){
-                    for(let i =0; i <5;i++)
-                    s += v[i].age
+                sum: function (v) {
+                    for (let i = 0; i < 5; i++)
+                        s += v[i].age
                     return s;
                 },
-                avg : function(v){
-                    return v/5;
+                avg: function (v) {
+                    return v / 5;
                 },
-                women : function(v){
-                    for(let i =0; i <5;i++){
-                        if(v[i].sex == "female")
-                        num++;
-                        if(i==4)
-                        return num;
+                women: function (v) {
+                    for (let i = 0; i < 5; i++) {
+                        if (v[i].sex == "female")
+                            num++;
+                        if (i == 4)
+                            return num;
                     }
                 }
             }
         })
     </script>
 </body>
+
 </html>
