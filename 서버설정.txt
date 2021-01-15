@@ -1,0 +1,7 @@
+서버설정
+
+preference - workspace - UTF-8
+
+new - others - server - apache - tomcat8.5설정
+
+server.xml - 63번째 줄 port 80으로

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="get()">모두보기</button>
+    <div id="app">
+        <table border="1">
+            <tr>
+                <th>id</th><th>이름</th><th>성</th><th>입사일</th><th>급여</th>
+            </tr>
+            <tr v-for="(model, key) in employees">
+                <td>{{model.employee_id}}</td><td>{{model.first_name}}</td><td>{{model.last_name}}</td><td>{{model.hire_date}}</td><td>{{model.salary}}</td>
+            </tr>
+        </table>
+        2번 급여 15000이상인 사람 이름 : {{employees|over}}<br>
+        3번 급여 15000이상인 사람 합 : {{employees|sum}}<br>
+    </div>
+    <!-- <div id="app2"></div> -->
+   
+    <script>
+        function get(){
+            axios.get("http://localhost/step11_BackLogic/list2.jsp")
+            .then(function (r) {
+                let temp = { employees: r.data }
+                let v = temp;
+                console.log(v)
+                let vm = new Vue({
+                    el: "#app",
+                    data: v,
+                    filters: {
+                        all: function (v) {
+
+                            return v;
+                        },
+                        over: function (v) {
+                            let name = [];
+                            for (let i = 0; i < 107; i++) {
+                                if (v[i].salary > 15000) {
+                                    name.push(v[i].first_name)
+                                }
+                            }
+                            return name;
+                        },
+                        sum: function (v) {
+                            let total = 0;
+                            for (let i = 0; i < 107; i++) {
+                                if (v[i].salary > 15000) {
+                                    total += v[i].salary;
+                                }
+
+                            }
+                            return total;
+                        }
+
+                    },
+                    methods: {
+                        all: function () {
+                            let all = [];
+                            for (let i = 0; i < employees.length; i++) {
+                                all.add(v[i]);
+                            }
+                            return all;
+                        },
+                    }
+                })
+                callj()
+            }).catch(function () {
+                console.log("예외 발생");
+            })
+        }
+        
+
+
+        // function callj() {
+        //     axios.get("http://localhost/step11_BackLogic/list3.jsp")
+        //         .then(function (r) {
+        //             document.getElementById("app2").innerHTML = r.data;
+        //         }).catch(function () {
+        //             console.log("예외 발생");
+        //         })
+        // }
+    </script>
+</body>
+
+</html>
+
+<!--
+    구현 로직
+
+    1. id/pw가 hr인 오라클 계정의 employees table 검색
+        - all query
+    2. 서비스 로직
+        1. 검색된 모든 자료를 다 출력
+        2. employees table의 특정 컬럼을 스스로 지정해서 필터링 하고자 하는 로직 선별
+        3. 입력 시 동적으로 합?평균? 등등의 수치 연산
+        ...
+    3. 제약
+        1. db의 검색 결과는 반드시 json 포맷으로 client에게 응답
+        2. json 관련 libraray 사용 필수
+        3. mvc pattern 미고려해도 됨, 프로젝트 시에는 필수
+            -jsp 하나로 다 처리 하셔도 됨
+        4. vue.js로 화면단 처리
+        5. back end는 반드시 eclipse로 별도의 server
+        6. front end는 반드시 vsc로 별도의 server
+            5,6번 서버가 다.르.다
+            도메인이 다르다
+            소통의 해결책 CORS
+        7. 비동기 필수
+-->

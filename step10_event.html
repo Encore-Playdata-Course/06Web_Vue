@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://www.w3schools.com/jsref/met_element_addeventlistener.asp">이벤트 처리 참조 사이트</a>
+
+    <br>
+    <hr><br>
+
+    <h3>Vue 기반의 event 처리 학습</h3>
+
+    <div id="app1">
+        <dl>
+            <dt>1. 버튼 클릭 시에 이벤트 발생</dt>
+            <dd>v-on이라는 directive 사용</dd>
+            <dd>v-on과 @ 표현식은 동일</dd>
+            <dd>
+                <button v-on:click="amount+=100">100 더하기</button>
+                <button v-on:click="amount-=50">50 빼기</button>
+                <button @click="amount+=50">50 더하기</button>
+            </dd>
+            <dd>
+                <input type="text" v-model="amount">
+            </dd>
+        </dl>
+
+        <!-- ?
+            잔액이 0 미만인 경우 인출 불가 메세지 출력 (alert),
+            입금 후에는 입금 완료라는 메세지 출력 (alert),
+            입출금에 해당하는 별도의 메소드 구현 후에 호출 (callback)
+
+            구현을 위한 설계
+                조건 : 인출하고자 하는 계좌의 잔액은 0보다
+                브라우저에서 입력되는 데이터 값을 메소드내에서 숫자로 인지해야 연산이 가능
+                입출금 입력을 위한 입력 폼 - input
+                잔액출력 {{}} 
+        -->
+
+        <dl>
+            <dt>2. 예금, 인출, 단 - 통장 아님</dt>
+            <dd>
+                얼마? : <input type="number" v-model="how"> <br>
+                <button v-on:click="insert()">예금</button>
+                <button v-on:click="withdraw()">인출</button>
+            </dd>
+            <dd>
+                통장 잔액 : {{amount}}
+            </dd>
+        </dl>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        let vm = new Vue({
+            el: "#app1",
+            data: {
+                amount: 0,
+                how: 0
+            },
+            methods: {
+                insert: function () {
+                    this.amount = parseInt(this.amount)
+                    this.how = parseInt(this.how)
+                    this.amount += this.how;
+                    this.how = 0;
+                    alert("입금 완료")
+                },
+                withdraw: function () {
+                    this.amount = parseInt(this.amount)
+                    this.how = parseInt(this.how)
+                    if (this.amount - this.how >= 0) {
+                        this.amount -= this.how;
+                    } else {
+                        alert("인출 불가")
+                    }
+                    this.how = 0;
+                }
+            }
+        })
+
+        // function insert(){
+        //     vm.amount += vm.how;
+        //     vm.how = 0;
+        //     alert("입금 완료")
+        // }
+
+        // function withdraw(){
+        //     if(vm.amount-vm.how>0){
+        //         vm.amount -= vm.how;
+        //         vm.how = 0;
+        //     }else{
+        //         alert("인출 불가")
+        //     }
+        // }
+    </script>
+</body>
+
+</html>
