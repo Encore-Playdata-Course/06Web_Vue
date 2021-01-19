@@ -20,17 +20,21 @@
 
     <div id="app">
         <!-- <child-com v-on:event-name="발생된 이벤트로인해 전송되는 데이터를 받는 부모단 메소드명"></child-com> -->
-        <child-com v-on:event-name="viewData"></child-com>
+        <child-com v-on:event-name="viewData" v-on:h="i" :r='some'></child-com>
         <div>{{message}}</div>
     </div>
 
     <script>
         Vue.component('child-com',{
-            template: '<button v-on:click="showLog">데이터보기</button>',
+            template:`<div><button v-on:click="showLog" style="color: purple; background-color: rgb(255, 0, 76);">데이터보기</button><br><button v-on:click="test">{{r}}</button></div>`,
+            props: ['r'],
             methods : {
                 showLog : function(){
                     //부모에게 데이터 제공 로직
                     this.$emit('event-name','child가 제공하는 데이터');
+                },
+                test : function(){
+                    this.$emit('h','123')
                 }
             }
         });
@@ -39,19 +43,21 @@
             el: "#app",
             //자식이 제공해주는 데이터를 받는 변수(property, model) 선언
             data : {
-                message : '부모데이터'
+                message : '부모데이터',
+                some : "123/100",
             },
             methods : {
                 viewData : function(value){
                     console.log(value);
                     this.message = value;
+                },
+                i : function(value){
+                    value = parseInt(value);
+                    this.message = value/100;
                 }
             }
         })
         
-        function show(){
-            alert(2)
-        }
     </script>
 </body>
 </html>

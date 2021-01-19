@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h3>Event Bus : 상속관계가 아닌 컴포넌트들 간에 상호작용하는 기술</h3>
+
+    <br><hr><br>
+    동작 : 버튼 클릭하면 데이터가 다른 컴포넌트로 전송되어 출력<br>
+    <br><hr><br>
+
+    <div id="app">
+        1. 데이터 발신 : <com1></com1>
+        <hr>
+        2. 데이터 수신 : <com2></com2>
+    </div>
+
+    <!-- template tag는 반드시 root tag 구성 후 작업 --> 
+    <template id="two">
+        <div>
+            데이터를 제공받는 컴포넌트
+            <ul>
+                <li v-for="m in message">{{m}}</li>
+            </ul>
+        </div>
+    </template>
+
+    <script>
+        /* 이벤트 버스용 즉 데이터를 승차, 하차 하게 되는 주체
+            데이터 제공 컴포넌트 / 데이터 활용 컴포넌트 / 메인 vue instanace
+        */
+       //event bus
+       let eventBus = new Vue();
+
+       // 발행 컴포넌트
+       Vue.component("com1",{
+            template: '<button v-on:click="showLog">데이터제공</button> ',
+            methods : {
+                showLog : function(){
+                   setInterval(()=>{eventBus.$emit('triggerEventBus', Math.floor(Math.random()*100))},200) ;
+                    // eventBus.$emit('triggerEventBus', 200);
+                }
+            }
+       });
+
+       /* 컴포넌트들이 다수로 재사용 가능성이 있음
+       event bus로 데이터를 제공해서 받는 컴포넌트들인 경우 하나의 객체가 여러 데이터 보유할 수도 있음
+       다수 영역에서 재사용
+       주의 사항 : data 즉 model은 공유가 되서는 안됨
+       해결책 : model용 data는 로컬로 선언해서 제공
+                함수로 구현해서 반환
+       */
+       // 수신 컴포넌트
+       Vue.component("com2",{
+            template:"#two",
+            data:function(){
+                return {message : []}
+            },
+            created: function(){ //이벤트 버스에서 데이터가 발송되면 수신하는 기능
+                eventBus.$on('triggerEventBus', this.clickM);
+            },
+            methods: {
+                //이벤트 버스가 발송한 데이터를 수신했을 경우 처리하는 로직의 메소드
+                clickM: function(v){
+                    this.message.push(v);//배열에 데이터 적재
+                }
+            }
+       });
+
+       new Vue({
+           el : "#app"
+       })
+    </script>
+</body>
+</html>
