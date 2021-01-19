@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 제공 start -->
+    <dl>
+        <dt><h3>watch - 관찰 속성</h3></dt>
+        <dd>
+            1. watch 옵션에 등록되는 것은 속성의 이름과 해당 속성이 변경되엇을 때 호출할 함수 의미
+        </dd>
+        <br>
+
+        <dd>2. x와 y에 데이터 입력, 연산을 위해서는 숫자여야만 함</dd>
+        <br>
+
+        <dd>3. 삼항 연산자를 이용하여 입력된 데이터가 blank인 경우 0으로 치환하기</dd> <br>
+        <dd>조건식? 조건식이 true인 경우 실행: 조건식이 false인 경우 실행</dd>
+        <dd>
+            4. x와 y 데이터 입력 <br>
+            <div id="app1">
+                x : <input type='number' v-model.number="x" /><br />
+                y : <input type='number' v-model.number="y" /><br /> <br>
+
+                연산된 덧셈 결과 : {{sum}}
+            </div>
+        </dd>
+    </dl>
+    <!-- 제공 end-->
+
+    <!-- lab -->
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#app1",
+            data: { 
+                x: 0, 
+                y: 0, 
+                sum: 0 
+            },
+            // ???
+            /* * 주의 사항
+                - 화면에 입력되는 데이터들은 기본적으로 문자열로 간주
+                - 서버에서 브라우저로 응답하는 데이터들도 문자열로 응답
+
+                각각 x,y에 입력되는 데이터 값들을 숫자로 변환 - Number(), ParseInt(), v-model.number
+                혹여 입력 없이 blank인 경우에도 함수가 자동 호출
+                Net A Number = NAN 숫자가 아닌 데이터 값인 경우 즉 blank인 경우 0 으로 치환해서 연산하기
+            */
+            watch : {
+                /*  변경되는 데이터 값 활용 방식
+                    1. x에 binding 되어 있는 input tag에 입력한 데이터를 parameter로 받음
+                    2. parameter 사용 없이 this.x로 {} 내에서 개발 가능
+                */
+                x : function(v){ //x라는 model의 데이터가 변경될 때 자동으로 실행되는 로직 등록
+                    //v = Number(v);
+                    //v = parseInt(v);
+                    //console.log(typeof(v));
+                    let result = Number(v) + Number(this.y);
+                    // 연산된 결과 값이 숫자가 아닌 경우엔 0, 숫자인 경우엔 연산된 결과값 sum 대입
+                    this.sum = isNaN(result)? 0 : result;
+                },
+                y : function(v){
+                    let result = Number(v) + Number(this.x);
+                    this.sum = isNaN(result)? 0 : result;
+                }
+            }
+           
+            //???
+        })
+    </script>
+</body>
+
+</html>

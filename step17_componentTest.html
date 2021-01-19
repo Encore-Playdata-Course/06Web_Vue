@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        #list {
+            width: 600px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #list td,
+        th {
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        #list>thead>tr {
+            color: yellow;
+            background-color: rgb(30, 168, 30);
+        }
+    </style>
+</head>
+
+<body>
+    
+    <h3>component review</h3>
+    <br><hr><br>
+    
+    1. 제공받은 데이터로 제시된 이미지 처럼 동일한 결과가 출력되게 완성하기 <br>
+
+    2. 재사용성을 고려하여 component 구조로 구성하기 <br>
+
+    3. 제공받은 서로 다른 데이터로 동일한 UI 구성을 하려면 어떻게 설계를 하면 좋을지 고민해 보기<br>
+
+    4. 중복 UI 부분은 template tag로 구성하기 <br>
+
+    <img src="images/step17_custlist.jpg" width="10%"> <br>
+
+
+    <br><hr><br>
+
+    <template id="listTemplate">
+        <div>
+            <table id="list">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>전화번호</th>
+                        <th>주소</th>
+                    </tr>
+                </thead>
+                <tbody id="contacts">
+                    <tr v-for="contact in contacts">
+                        <td>{{contact.no}}</td>
+                        <td>{{contact.name}}</td>
+                        <td>{{contact.tel}}</td>
+                        <td>{{contact.address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <div id="app">
+        <h3>고객 명단</h3>
+        <hr>
+        <h3>1차 고객 : 1월 1~3일</h3>
+        <list-template :contacts="list1"></list-template>
+        <h3>2차 고객 : 1월 13~15일</h3>
+        <list-template2 :contacts="list2"></list-template2>
+    </div>
+
+    <script>
+        Vue.component("list-template",{
+            template:"#listTemplate",
+            props:["contacts"]
+        })
+
+        Vue.component("list-template2",{
+            template:"#listTemplate",
+            props:{
+                contacts: undefined
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list1: [  //1차 고객 명단
+                    { "no": 97, "name": "유재석", "tel": "010-3456-8296", "address": "서울시" },
+                    { "no": 96, "name": "신동엽", "tel": "010-3456-8295", "address": "서울시" },
+                    { "no": 95, "name": "이승기", "tel": "010-3456-8294", "address": "서울시" }
+                ],
+                list2: [ //2차 고객 명단
+                    { "no": 82, "name": "김혜수", "tel": "010-3456-8281", "address": "서울시" },
+                    { "no": 81, "name": "전지현", "tel": "010-3456-8280", "address": "서울시" }
+                ]
+            }
+        });
+    </script>
+</body>
+</html>

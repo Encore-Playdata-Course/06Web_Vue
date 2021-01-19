@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /*
+         .set1 {
+            background-color: yellow;
+            color: purple;
+        }
+        . : class 속성 의미
+        .set1 : class="set1" 의미
+        background-color : 배경색
+        color 1 : 폰트색
+        */
+
+        .set1 {
+            background-color: yellow;
+        }
+
+        .set2 {
+            text-align: center;
+            width: 220px;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 제공 start -->
+    <dl>
+        <dt>
+            <h3>CSS class binding : Vue 미적용, 적용 비교하기</h3>
+        </dt>
+        <dd>
+            1. css class를 binding하기 위해 v-bind:class 사용
+        </dd>
+        <br>
+
+        <dd>2. 개별 class 단위로 true인 경우 class style 적용</dd>
+        <br>
+
+        <dd>3. 동작 : checkbox 클릭해서 css 동적으로 적용해 보기</dd>
+        <br>
+
+        <dd>4. Vue 미적용 : class를 동적으로 적용한 코드인 경우 <br>
+
+            <button id="btn1">1. class 속성 적용 버튼</button>
+            <p>
+                <input id="set1" type="checkbox" value="false" onclick="btnChange1(this)" />set1 : 버튼색 변경<br />
+                <input type="checkbox" value="false" onclick="btnChange2()" />set2 : 버튼 width 사이즈 변경<br />
+            </p>
+        </dd>
+    </dl>
+    <script>
+        //vue 없이 직접 동적 처리를 위한 순수 자바 스크립트 코드였음
+        function btnChange1(v) {
+            console.log(v.value);
+            btn1 = document.getElementById("btn1");
+
+            if (v.value === "false") {
+                btn1.style.backgroundColor = "yellow";
+                btn1.style.color = "purple";
+                btn1.style.width = "220px";
+                v.value = true;
+            } else {
+                btn1.style.backgroundColor = "lightgray";
+                btn1.style.width = "170px";
+                v.value = false;
+            }
+        }
+    </script>
+    <br>
+    <hr><br>
+
+    <!-- 제공 end-->
+
+
+    <dd> 5. Vue 적용 : 간결한 코드 <br>
+        <div id="app">
+            <!-- ??? -->
+            <!-- 
+                v-bind:class - style 적용 부분 즉 class 속성에 다음과 같이 개발 하겠다는 의미
+                class="set1 set2" : set1 과 set2라는 css의 설정을 동시에 적용하겠다는 설정
+
+                v-bind:class={set1:s1, set2:s2}
+                    s1과 s2값이 true인 경우 적용, false인 경우 미적용
+            -->
+            <button  v-bind:class = "{set1:s1, set2:s2}"  >2. class 속성 적용 버튼</button>
+            <p>
+                <input type="checkbox" v-model="s1" value="true" />set1 : 버튼색 변경<br />
+                <input type="checkbox" v-model="s2" value="true" />set2 : 버튼 width 사이즈 변경<br />
+            </P>
+        </div>
+    </dd>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                s1: false,
+                s2: false,
+            }
+        })
+    </script>
+</body>
+
+</html>

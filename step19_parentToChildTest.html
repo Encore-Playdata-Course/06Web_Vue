@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h3>컴포넌트 및 v-bind 필요성 인지를 위한 미션</h3>
+    <br><hr><br>
+
+    1. 상위에서 하위 컴포넌트로 데이터 전달 review <br>
+    2. 컴포넌트 문법 review <br> <br> 
+    <img src="images/step19.jpg" width="50%">
+    
+    <br><hr size="2" color="blue"><br>
+    3. 제시된 화면을 보고 미완성 부분 완성하기 <br><br>
+
+    <!-- 1단계 : root Vue instance에 지역 컴포넌트 등록
+        2단계 : 각 컴포넌트로 등록된 receive_data 에 부모가 제공하는 데이터 대입-->
+    <!-- ??? -->
+    <div id="app">
+        <com1 :receive_data="parentData"></com1>
+        <com2></com2>
+        <com2 :receive_data="parentData"></com2>
+        
+       
+        
+    </div>
+
+    <script>
+        let cmp1 = {
+            props: ['receive_data'], //생략 불가
+            template: '<div>지역 컴포넌트1 - 부모로부터 제공 받은 데이터 : {{ receive_data }}</div>',
+        };
+
+        let cmp2 = {
+            props: ['receive_data'], //생략 불가
+            template: '<div style="color:red">지역 컴포넌트2 : 부모로부터 제공 받은 데이터 : {{ receive_data }}</div>',
+        };
+
+        new Vue({
+            el: '#app',
+            // ??? 지역 컴포넌트로 등록
+           components: {
+            'com1':cmp1,
+            'com2': cmp2
+           },
+            data: {
+                parentData: 'smile'
+            }
+        });
+
+    </script>
+</body>
+
+</html>

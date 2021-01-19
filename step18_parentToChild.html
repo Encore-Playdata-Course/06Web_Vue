@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h3>상위에서 하위 컴포넌트로 데이터 전달하는 문법 이해 및 정리하기</h3>
+
+    <br>
+    1. props : 부모가 제공하는 데이터를 받기 위한 property  <br>
+    2. view 완성하기 <br>
+
+    
+    <br><hr><br>
+
+    <div id="app">
+        <!-- ??? -->
+        <child-component v-bind:parent_data_receive="supermessage"></child-component>
+        
+    </div>
+
+    <script>
+        //자식 컴포넌트
+        Vue.component('child-component', {
+            props: ['parent_data_receive'],  //대문자 사용 불가, js 에선 변수명에 -(대쉬,하이픈) 사용불가
+            template: '<p>제공받은 데이터 영역 : {{ parent_data_receive }}</p>'
+        });
+
+        //부모 컴포넌트
+        new Vue({
+            el: '#app',
+            data: {
+                supermessage: '부모가 제공한 데이터'
+            }
+        });
+    </script>
+</body>
+
+</html>
