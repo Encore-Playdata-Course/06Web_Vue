@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="application/json; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%> 
-<%@page import="model.DAO"%>
+<%@page import="model.deptDAO"%>
 <%
 	request.setCharacterEncoding("utf-8");
 	response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
@@ -12,4 +12,4 @@
      response.setHeader("Content-Type", "application/json");
      response.setHeader("Accept", "application/json"); */
 %>
-<%= DAO.getJson() %>
+<%= deptDAO.getJson() %>

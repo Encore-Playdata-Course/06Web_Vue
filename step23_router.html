@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <!-- 네비게이션을 위해 router-link 컴포넌트를 사용합니다. -->
+            <!-- 구체적인 속성은 `to` prop을 이용합니다. -->
+            <!-- 기본적으로 `<router-link>`는 `<a>` 태그로 렌더링됩니다.-->
+            <router-link to="/foo">Go to Foo</router-link>
+            <router-link to="/bar">Go to Bar</router-link>
+            <router-link to="/name">Go to Name</router-link>
+            <router-link to="/dept">Go to dept</router-link>
+            <router-link to="/tabledata">Go to TableData</router-link>
+        </p>
+        <!-- 라우트 아울렛 -->
+        <!-- 현재 라우트에 맞는 컴포넌트가 렌더링됩니다. -->
+        <router-view></router-view>
+    </div>
+
+    <script>
+        let v = { dept: [] };
+        axios.get("http://localhost/step23_routerBack/list2.jsp")
+            .then(function (r) {
+                v.dept = r.data;
+                console.log(v)
+            }).catch(function () {
+                console.log("예외 발생");
+            })
+
+        function myFun() {
+            alert(1);
+        }
+        //app id값을 보유한 view기반의 Vue instance 내부의 함수가 아닌 개별 객체 단위로 구성되는 함수에 대한 이벤트 처리만 가능
+        //Name이 보유한 js 객체 내부의 methds만 name url에 매핑된 router-link 영역에서 사용가능
+        //렌더링시 a 앵커 tag로 간주 즉 화면이 마치 여러개인듯한 처리하기 때문에
+        const Foo = { template: '<div>foo</div>' }
+        const Bar = { template: '<div>bar</div>' }
+        const dept = {
+            template: `<div><table border="1">
+            <tr>
+                <th>부서번호</th><th>부서이름</th><th>위치</th>
+            </tr>
+            <tr v-for="(model, key) in dept">
+                <td>{{model.deptno}}</td><td>{{model.dname}}</td><td>{{model.loc}}</td>
+            </tr>
+        </table></div>`,
+            data: function () {
+                console.log(v)
+                return v;
+            },
+        }
+        const Name = {
+            template: '<div><button v-on:click="test">김민건</button></div>',
+            methods: {
+                test: function () {
+                    alert("데헷")
+                }
+            },
+        }
+        const TableData = {
+            template: `<table>
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+  <tr>
+    <td>Ernst Handel</td>
+    <td>Roland Mendel</td>
+    <td>Austria</td>
+  </tr>
+  <tr>
+    <td>Island Trading</td>
+    <td>Helen Bennett</td>
+    <td>UK</td>
+  </tr>
+  <tr>
+    <td>Laughing Bacchus Winecellars</td>
+    <td>Yoshi Tannamuri</td>
+    <td>Canada</td>
+  </tr>
+  <tr>
+    <td>Magazzini Alimentari Riuniti</td>
+    <td>Giovanni Rovelli</td>
+    <td>Italy</td>
+  </tr>
+</table>`}
+
+        // 2. 라우트를 정의하세요.
+        // Each route should map to a component. The "component" can
+        // 각 라우트는 반드시 컴포넌트와 매핑되어야 합니다.
+        // "component"는 `Vue.extend()`를 통해 만들어진
+        // 실제 컴포넌트 생성자이거나 컴포넌트 옵션 객체입니다.
+        const routes = [
+            { path: '/foo', component: Foo },
+            { path: '/bar', component: Bar },
+            { path: '/name', component: Name },
+            { path: '/tabledata', component: TableData },
+            { path: '/dept', component: dept },
+        ]
+
+        // 3. `routes` 옵션과 함께 router 인스턴스를 만드세요.
+        // 추가 옵션을 여기서 전달해야합니다.
+        // 지금은 간단하게 유지하겠습니다.
+        const router = new VueRouter({
+            routes // `routes: routes`의 줄임
+        })
+
+        // 4. 루트 인스턴스를 만들고 mount 하세요.
+        // router와 router 옵션을 전체 앱에 주입합니다.
+        const app = new Vue({
+            el: "#app",
+            router
+        })
+
+
+
+
+    </script>
+    </div>
+</body>
+
+</html>

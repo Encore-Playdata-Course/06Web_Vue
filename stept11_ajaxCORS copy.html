@@ -80,7 +80,13 @@
             })
         }
         
-
+        axios.get("http://localhost/step23_routerBack/list2.jsp")
+            .then(function (r) {
+                // dept.$data.dept = r.data
+                console.log()
+            }).catch(function () {
+                console.log("예외 발생");
+            })
 
         // function callj() {
         //     axios.get("http://localhost/step11_BackLogic/list3.jsp")
