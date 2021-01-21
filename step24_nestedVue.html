@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,82 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 </head>
+
 <body>
 
+    <h3>Nested Vue 개발 방식 학습</h3>
+    <br>
+    <hr><br>
+    상위 컴포넌트에 하위 컴포넌트 포함하는 방식 <br>
+
+    <br>
+    <hr<br>
+        <!-- 화면에 보여져야 하는 내용 : 링크 (<router-link to="url값">) / 로직 처리 view 화면 (<router-view>)
+            상위 하위 관계 따라서 사우이 template내에 <router-view> 구현
+            
+            <form action="#"></form> 로 설정해 놓았을 경우 submit 버튼 클릭하면 해당 page를 벗어나지 않음-->
+        <div id="app">
+            <router-link to="/parent">상위 컴포넌트</router-link>
+            <router-link to="/parent/child1">하위 컴포넌트1</router-link>
+            <router-link to="/parent/child4/child3">하위 컴포넌트1-2</router-link>
+            <router-link to="/parent/child2">하위 컴포넌트2</router-link>
+
+            <!-- 링크를 클릭하면 해당 router로 구성된 화면이 렌더링 되는 tag
+                실행 url process
+                    http://127.0.0.1:5500/step24_nestedVue.html#/parent
+                        상위 컴포넌트 클릭
+                            //127.0.0.1:5500/step24_nestedVue.html#/parent/child1
+                                parent url에 매핑된 component가 router-view tag 영역에 실행
+
+                최초 메인에선 link 클릭을 안 했기 때문에 다 안 보임
+                <router-view></router-view> tag 존재해도 렌더링 내용이 없음-->
+            <router-view></router-view>
+        </div>
 
 
 
-    
-    <script>
+        <script>
+            let parent = {
+                template: `
+                    <div>
+                        상위 컴포넌트
+                        <router-view></router-view>
+                    </div>`
+            }
 
-    </script>
+            let c1 = {
+                template : '<div>하위1 컴포넌트</div>'
+            }
+            let c2 = {
+                template : '<div>하위2 컴포넌트</div>'
+            }
+            let c3 = {
+                template : '<div>하위3 컴포넌트<router-view></router-view></div>'
+            }
+
+            //router 기능
+            let routes = [
+                {
+                    path: '/parent',
+                    component: parent,
+                    children: [
+                        { path: 'child4',component:c3,children: [{ path: 'child3',component:c3}]},
+                        { path: 'child1',component:c1},
+                        { path: 'child2',component:c2}
+                    ]
+                }
+            ]
+
+            //VueRouter 객체 생성
+            let router = new VueRouter({
+                routes
+            });
+
+            let app = new Vue({
+                el : "#app",
+                router
+            })
+        </script>
 </body>
+
 </html>
