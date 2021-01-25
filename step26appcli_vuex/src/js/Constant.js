@@ -4,7 +4,7 @@
 
 // *컴포넌트에서 변이 작업 진행 시 실제 호출되는 함수 이름을 등록
 export default{
-    CHECKED : "checked",
+    INPUT : "input",
     ADDLANGUAGE : "addlanguage",
     LANGTOGGLE : "langToggle",
     DELETELANGUAGE : "deletelanguage"

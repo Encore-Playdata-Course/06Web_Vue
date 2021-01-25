@@ -65,7 +65,7 @@ ul li.checked {
 </template>
 
 <script>
-import eventBus from "../EventBus";
+// import eventBus from "../EventBus";
 import Constant from "../js/Constant.js";
 // import Vuex from?
 
@@ -73,9 +73,6 @@ export default {
   name: "List",
   data: function () {
     return this.$store.state;
-  },
-  created: function () {
-    eventBus.$on("add-language", this.addlanguage);
   },
   methods: {
     checked: function (lang) {
@@ -85,9 +82,9 @@ export default {
         return { checked: false };
       }
     },
-    addlanguage: function (payload) {
-      this.$store.commit(Constant.ADDLANGUAGE, payload);
-    },
+    // addlanguage: function (payload) {
+    //   this.$store.commit(Constant.ADDLANGUAGE, payload);
+    // },
     langToggle: function (payload) {
       console.log(this.$store);
       this.$store.commit(Constant.LANGTOGGLE, payload);

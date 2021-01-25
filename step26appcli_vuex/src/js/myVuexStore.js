@@ -7,7 +7,7 @@ import Constant from './Constant.js';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state : {
+    state : {  
             languagelist: [
                 { id: 1, language: "Python", lang: false },  
                 { id: 2, language: "Java", lang: true },  
@@ -17,6 +17,7 @@ export default new Vuex.Store({
     },
     mutations : {
         [Constant.ADDLANGUAGE]:(oldState, payload)=> {
+            // console.log(11+this) -> NAN
             if (oldState.languagelist.language !== "") {
                 oldState.languagelist.push({ 
                     id: new Date().getTime(), 
