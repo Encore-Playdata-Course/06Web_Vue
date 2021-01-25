@@ -1,0 +1,49 @@
+실습 구조
+
+1. computer.js
+
+    1. 참고
+        1. db의 설정 정보 분리
+            db.properties
+            key=value 구조로 분리
+            일괄적으로 설정 정보를 분리해서 관리
+        
+        2. 자바 관점
+            interface는 스펙 제시
+                가령
+                connection 이라는 interface는 썬에서 스펙 제시
+                db 판매하는 벤더사에서 각 db에 맞게 최적화로 개발해서 driver로 압축해서 jar로 제공
+                자바 개발자는 단순 호출로 사용하고자 하는 모든 db 접속가능
+
+    2. 로직
+        다수의 컴포넌트들이 어떤 작업을 공유하면 실행되는 지를 파악하기 위해서 함수명을 상수화 (스펙 설정)    
+
+2. myVuexStore.js
+    1. 로직 - 공유 데이터를 사용 가능하게 하는 js
+    2. 구성
+        1. 데이터
+            - 상태
+            - 숫자 데이터 & 문자열 데이터
+        2. 데이터를 가공하는 내용
+            - 변이
+
+3. Counter.vue
+    - 숫자 데이터 사용하는 컴포넌트들
+
+4. MessageClick.vue & MessageNonClick.vue
+    - 문자 데이터 사용하는 컴포넌트들
+    - MessageClick.vue
+        : myVueStore.js의 message가 이미 보유하고 있는 데이터 값 출력
+    - MessageNonClick.vue
+        : message가 변경하기
+
+5. CLI 기반의 기본적으로 제공하는 핵심 src
+    - 편집
+    1. main.js
+    2. App.vue
+
+1. 설계만 해보기
+    step26appcli 부분에 데이터를 공유 데이터로 변경한다 할 경우 어떻게 구조화 할지에 대한 설계
+    개발 설계
+        router + myVuexStore
+        : 5분 발표 - 5시 30분 진행
