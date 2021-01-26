@@ -7,7 +7,8 @@ import Constant from './Constant.js';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state : {  
+    state : {
+            language : "",  
             languagelist: [
                 { id: 1, language: "Python", lang: false },  
                 { id: 2, language: "Java", lang: true },  
